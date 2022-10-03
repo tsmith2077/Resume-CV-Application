@@ -13,25 +13,13 @@ class General extends Component {
         }
     }
 
-    handleChangeName = (e) => {
+    handleInputChange = (e) => {
         this.setState({
-            name: e.target.value,
-        });
-    };
-
-    handleChangeEmail = (e) => {
-        this.setState({
-            email: e.target.value,
-        });
-    };
-
-    handleChangePhone = (e) => {
-        this.setState({
-            phone: e.target.value,
-        });
-    };
+            [e.target.name]: e.target.value,
+        })
+    }
     
-    handleSumbitEditClick = (event) => {
+    handleSubmitEditClick = (event) => {
         event.preventDefault()
         this.setState({
             formView: !this.state.formView,
@@ -47,32 +35,35 @@ class General extends Component {
                 {
                 this.state.formView ? (
                 <form>
-                    <label htmlFor="nameInput">Enter name:</label>
+                    <label htmlFor="nameInput">Enter full name:</label>
                     <input
-                        onChange={this.handleChangeName}
+                        onChange={this.handleInputChange}
                         value={this.state.name}
+                        name="name"
                         type="text"
                         id="nameInput"
                         required
                     />
                     <label htmlFor="emailInput">Enter email:</label>
                     <input
-                        onChange={this.handleChangeEmail}
+                        onChange={this.handleInputChange}
                         value={this.state.email}
+                        name="email"
                         type="text"
                         id="emailInput"
                         required
                     />
                     <label htmlFor="phoneInput">Enter phone number:</label>
                     <input
-                        onChange={this.handleChangePhone}
+                        onChange={this.handleInputChange}
                         value={this.state.phone}
+                        name="phone"
                         type="text"
                         id="nameInput"
                         required
                     />
                     <div className='btnCont'>
-                        <button onClick={this.handleSumbitEditClick}>Submit</button>
+                        <button onClick={this.handleSubmitEditClick}>Submit</button>
                     </div>
                 </form>
                 ) : (
@@ -83,7 +74,7 @@ class General extends Component {
                         <p>Phone:  {this.state.phone}</p>
                     </div>
                     <div className='btnCont'>
-                        <button onClick={this.handleSumbitEditClick}>Edit</button>
+                        <button onClick={this.handleSubmitEditClick}>Edit</button>
                     </div>
                 </div>
                 )

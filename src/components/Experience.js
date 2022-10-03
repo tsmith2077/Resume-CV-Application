@@ -28,40 +28,9 @@ class Experience extends Component {
         }
     }
 
-    handleChangeCompany = (e) => {
+    handleInputChange = (e) => {
         this.setState({
-            company: e.target.value,
-        });
-    };
-
-    handleChangePosition = (e) => {
-        this.setState({
-            position: e.target.value,
-        });
-    };
-
-    handleChangeTasks = (e) => {
-        this.setState({
-            tasks: e.target.value,
-        });
-    };
-
-    handleChangeStartDate = (e) => {
-        this.setState({
-            startDate: e.target.value,
-        });
-    };
-
-    handleChangeEndDate = (e) => {
-        this.setState({
-            endDate: e.target.value,
-        });
-    };
-    
-    handleSumbitEditClick = (event) => {
-        event.preventDefault()
-        this.setState({
-            formView: !this.state.formView,
+            [e.target.name]: e.target.value,
         })
     }
 
@@ -171,40 +140,45 @@ class Experience extends Component {
             <form key={expInfo.id}>
                 <label htmlFor="companyInput">Enter Company:</label>
                 <input
-                    onChange={this.handleChangeCompany}
+                    onChange={this.handleInputChange}
                     value={this.state.company}
+                    name="company"
                     type="text"
                     id="companyInput"
                     required
                 />
                 <label htmlFor="positionInput">Enter Position:</label>
                 <input
-                    onChange={this.handleChangePosition}
+                    onChange={this.handleInputChange}
                     value={this.state.position}
+                    name="position"
                     type="text"
                     id="positionInput"
                     required
                 />
                 <label htmlFor="tasksInput">Enter Tasks:</label>
                 <input
-                    onChange={this.handleChangeTasks}
+                    onChange={this.handleInputChange}
                     value={this.state.tasks}
+                    name="tasks"
                     type="textarea"
                     id="tasksInput"
                     required
                 />
                 <label htmlFor="startDateInput">Enter start date:</label>
                 <input
-                    onChange={this.handleChangeStartDate}
+                    onChange={this.handleInputChange}
                     value={this.state.startDate}
+                    name="startDate"
                     type="date"
                     id="startDateInput"
                     required
                 />
                 <label htmlFor="endDateInput">Enter end date:</label>
                 <input
-                    onChange={this.handleChangeEndDate}
+                    onChange={this.handleInputChange}
                     value={this.state.endDate}
+                    name="endDate"
                     type="date"
                     id="endDateInput"
                     required

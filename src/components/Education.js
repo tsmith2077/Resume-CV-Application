@@ -22,23 +22,11 @@ class Education extends Component {
         }
     }
 
-    handleChangeSchool = (e) => {
+    handleInputChange = (e) => {
         this.setState({
-            school: e.target.value,
-        });
-    };
-
-    handleChangeTitleOfStudy = (e) => {
-        this.setState({
-            titleOfStudy: e.target.value,
-        });
-    };
-
-    handleChangeDate = (e) => {
-        this.setState({
-            date: e.target.value,
-        });
-    };
+            [e.target.name]: e.target.value,
+        })
+    }
     
     handleAddClick = (e) => {
         e.preventDefault()
@@ -139,7 +127,8 @@ class Education extends Component {
                 <div className='inputCont'>
                     <label htmlFor="schoolInput">Enter School:</label>
                     <input
-                        onChange={this.handleChangeSchool}
+                        onChange={this.handleInputChange}
+                        name="school"
                         value={this.state.school}
                         type="text"
                         className="schoolInput"
@@ -147,16 +136,18 @@ class Education extends Component {
                     />
                     <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
                     <input
-                        onChange={this.handleChangeTitleOfStudy}
+                        onChange={this.handleInputChange}
                         value={this.state.titleOfStudy}
+                        name="titleOfStudy"
                         type="text"
                         className="titleOfStudyInput"
                         required
                     />
                     <label htmlFor="dateInput">Enter date of completion:</label>
                     <input
-                        onChange={this.handleChangeDate}
+                        onChange={this.handleInputChange}
                         value={this.state.date}
+                        name= "date"
                         type="date"
                         className="dateInput"
                         required
