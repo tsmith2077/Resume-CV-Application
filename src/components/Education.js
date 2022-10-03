@@ -77,45 +77,62 @@ class Education extends Component {
             eduArr: updatedEduArr,
             school: item.school,
             titleOfStudy: item.titleOfStudy,
-            date: item.date,
+            date: this.formatDateForEdit(item.date),
         });
     }
 
+    // FOOBAR 
     handleSubmitClick = (e) => {
         e.preventDefault()
-        let updatedEduArr = [...this.state.eduArr]
-        updatedEduArr = updatedEduArr.filter(item => item.id !== e.target.id)
-        updatedEduArr.push ({
+        const index = this.state.eduArr.findIndex(object => {
+            return object.id === e.target.id
+        })
+        let updatedEduArr = [...this.state.eduArr];
+        let item = {...updatedEduArr[index]};
+        item = {
             school: this.state.school,
             titleOfStudy: this.state.titleOfStudy,
-            date: this.dateFormat(this.state.date),
+            date: this.formattedDate(this.state.date),
             id: e.target.id,
             formView: false,
-        })
+        }
+        updatedEduArr[index] = item;
         this.setState({
             eduArr: updatedEduArr,
             school: '',
             titleOfStudy: '',
             date: '',
-        })
-    }
-
-    dateFormat = (date) => {
-        if (date === '') {
-            return 'Present'
-        } else {
-            return this.formattedDate(date)
-        }
+        });
     }
 
     formattedDate = (date) => {
-        let dateInput = date.split('-')
-        const day = dateInput[2]
-        const month = dateInput[1]; // Return Value is 0 indexed
-        const year = dateInput[0];
-        let fullDate = month + "/" + day + "/" + year;
-        return fullDate;
+        if (date === '') {
+            return ''
+        } else if (date.includes('/')) {
+            return date
+        } else {
+            console.log(date)
+            let dateInput = date.split('-')
+            const day = dateInput[2]
+            const month = dateInput[1]; // Return Value is 0 indexed
+            const year = dateInput[0];
+            let fullDate = month + "/" + day + "/" + year;
+            return fullDate;
+        }
     };
+
+    formatDateForEdit = (date) => {
+        if (date === '') {
+            return ''
+        } else {
+            let dateInput = date.split('/')
+            const day = dateInput[1]
+            const month = dateInput[0]; // Return Value is 0 indexed
+            const year = dateInput[2];
+            let fullDate = year + "-" + month + "-" + day;
+            return fullDate;
+        }
+    }
 
     // FOOBAR need to change this to ternary expression to avoid order from changing on updates
     renderEduArr = () => {
