@@ -7,22 +7,7 @@ class Education extends Component {
         super();
 
         this.state = {
-            eduArr: [
-                {
-                    school: 'Colorado University',
-                    titleOfStudy: 'Business',
-                    date: '',
-                    id: uuidv4(),
-                    formView: false,
-                },
-                {
-                    school: 'Lee University',
-                    titleOfStudy: 'Software Development',
-                    date: '',
-                    id: uuidv4(),
-                    formView: false,
-                },
-            ],
+            eduArr: [],
             school: '',
             titleOfStudy: '',
             date: '',
@@ -64,10 +49,19 @@ class Education extends Component {
         return this.renderEduForm()
     }
 
+    handleDeleteClick = (e) => {
+        e.preventDefault()
+        this.setState({
+            eduArr: this.state.eduArr.filter(eduInfo => {
+                return eduInfo.id !== e.target.className
+            })
+        }) 
+    }
+
     handleEditClick = (e) => {
         e.preventDefault()
         const index = this.state.eduArr.findIndex(object => {
-            return object.id === e.target.id
+            return object.id === e.target.className
         })
         let updatedEduArr = [...this.state.eduArr];
         let item = {...updatedEduArr[index]};
@@ -81,11 +75,10 @@ class Education extends Component {
         });
     }
 
-    // FOOBAR 
     handleSubmitClick = (e) => {
         e.preventDefault()
         const index = this.state.eduArr.findIndex(object => {
-            return object.id === e.target.id
+            return object.id === e.target.className
         })
         let updatedEduArr = [...this.state.eduArr];
         let item = {...updatedEduArr[index]};
@@ -93,7 +86,7 @@ class Education extends Component {
             school: this.state.school,
             titleOfStudy: this.state.titleOfStudy,
             date: this.formattedDate(this.state.date),
-            id: e.target.id,
+            id: e.target.className,
             formView: false,
         }
         updatedEduArr[index] = item;
@@ -114,7 +107,7 @@ class Education extends Component {
             console.log(date)
             let dateInput = date.split('-')
             const day = dateInput[2]
-            const month = dateInput[1]; // Return Value is 0 indexed
+            const month = dateInput[1];
             const year = dateInput[0];
             let fullDate = month + "/" + day + "/" + year;
             return fullDate;
@@ -127,78 +120,22 @@ class Education extends Component {
         } else {
             let dateInput = date.split('/')
             const day = dateInput[1]
-            const month = dateInput[0]; // Return Value is 0 indexed
+            const month = dateInput[0];
             const year = dateInput[2];
             let fullDate = year + "-" + month + "-" + day;
             return fullDate;
         }
     }
 
-    // FOOBAR need to change this to ternary expression to avoid order from changing on updates
-    renderEduArr = () => {
+    showEduForm = (eduInfo) => {
         return (
-            <div>
-                {       
-                this.state.eduArr.filter(eduInfo => eduInfo.formView === false).map((filteredEduInfo) => {
-                        return (
-                            <div key={ filteredEduInfo.id }>
-                                <p>School:  {filteredEduInfo.school}</p>
-                                <p>Title of Study:  {filteredEduInfo.titleOfStudy}</p>
-                                <p>Completion Date:  {filteredEduInfo.date}</p>
-                                <div className='btnCont'>
-                                    <button onClick={this.handleEditClick} id={filteredEduInfo.id}>Edit</button>
-                                </div>
-                            </div>
-                        )
-                })
-                }
-                {this.state.eduArr.filter(eduInfo => eduInfo.formView === true).map((filteredEduInfo) => {
-                        return (
-                            <form key={ filteredEduInfo.id }>
-                                <label htmlFor="schoolInput">Enter School:</label>
-                                <input
-                                    onChange={this.handleChangeSchool}
-                                    value={this.state.school}
-                                    type="text"
-                                    className="schoolInput"
-                                    required
-                                />
-                                <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
-                                <input
-                                    onChange={this.handleChangeTitleOfStudy}
-                                    value={this.state.titleOfStudy}
-                                    type="text"
-                                    className="titleOfStudyInput"
-                                    required
-                                />
-                                <label htmlFor="dateInput">Enter date of completion:</label>
-                                <input
-                                    onChange={this.handleChangeDate}
-                                    value={this.state.date}
-                                    type="date"
-                                    className="dateInput"
-                                    required
-                                />
-                                <div className='btnCont'>
-                                    <button onClick={this.handleSubmitClick} id={filteredEduInfo.id} >Submit</button>
-                                </div>
-                            </form>
-                        )
-                    })
-                }
-            </div>
-        ) 
-    }
-
-    renderEduForm = () => {
-        return (
-            <form>
+            <form key={ eduInfo.id }>
                 <label htmlFor="schoolInput">Enter School:</label>
                 <input
                     onChange={this.handleChangeSchool}
                     value={this.state.school}
                     type="text"
-                    id="schoolInput"
+                    className="schoolInput"
                     required
                 />
                 <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
@@ -206,7 +143,7 @@ class Education extends Component {
                     onChange={this.handleChangeTitleOfStudy}
                     value={this.state.titleOfStudy}
                     type="text"
-                    id="titleOfStudyInput"
+                    className="titleOfStudyInput"
                     required
                 />
                 <label htmlFor="dateInput">Enter date of completion:</label>
@@ -214,47 +151,47 @@ class Education extends Component {
                     onChange={this.handleChangeDate}
                     value={this.state.date}
                     type="date"
-                    id="dateInput"
+                    className="dateInput"
                     required
                 />
                 <div className='btnCont'>
-                    <button onClick={this.handleSubmitEditClick}>Submit</button>
+                    <button onClick={this.handleSubmitClick} className={eduInfo.id} >Submit</button>
                 </div>
             </form>
         )
     }
 
-    showEduInfo = () => {
+    showEduInfo = (eduInfo) => {
         return (
-        <div>
-            <p>School:  {this.state.school}</p>
-            <p>Title of Study:  {this.state.titleOfStudy}</p>
-            <p>Completion Date:  {this.state.date}</p>
-            <div className='btnCont'>
-                <button onClick={this.handleEditClick}>Edit</button>
-                <button onClick={this.handleAddClick}>Add</button>
+            <div key={eduInfo.id}>
+                <p>School:  {eduInfo.school}</p>
+                <p>Title of Study:  {eduInfo.titleOfStudy}</p>
+                <p>Completion Date:  {eduInfo.date}</p>
+                <div className='btnCont'>
+                    <button onClick={this.handleEditClick} className={eduInfo.id}>Edit</button>
+                    <button onClick={this.handleDeleteClick} className={eduInfo.id} >Delete</button>
+                </div>
             </div>
-        </div>
         )
     }
 
-    // handleAddClick = () => {
-    //     return (
-    //         <>
-    //         {this.renderEduArr()},
-    //         {this.renderEduForm()}
-    //         </>
-    //     )
-    // }
-
-    renderEducation = () => {
+    renderEduArr = () => {
         return (
-            this.state.formView ? (
-                this.renderEduForm()
-            ) : (
-                this.showEduInfo()
-            )
-        )
+            <div>
+                {this.state.eduArr.map(eduInfo => {
+                    if (eduInfo.formView === true) {
+                        return (
+                            this.showEduForm(eduInfo)
+                        )
+                    } else {
+                        return (
+                           this.showEduInfo(eduInfo)
+                        )
+                    }
+                })
+                }
+            </div>
+        ) 
     }
 
   render() {

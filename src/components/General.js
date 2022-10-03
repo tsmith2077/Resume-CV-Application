@@ -6,6 +6,7 @@ class General extends Component {
         super();
 
         this.state = {
+            generalArr: [],
             name: '',
             email: '',
             phone: '',
