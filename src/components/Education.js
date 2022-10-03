@@ -7,11 +7,18 @@ class Education extends Component {
         super();
 
         this.state = {
-            eduArr: [],
+            eduArr: [{
+                school: '',
+                titleOfStudy: '',
+                date: '',
+                formView: true,
+                id: uuidv4(),
+            }],
             school: '',
             titleOfStudy: '',
             date: '',
             formView: true,
+            id: '',
         }
     }
 
@@ -46,7 +53,6 @@ class Education extends Component {
                 }
             ),
         })
-        return this.renderEduForm()
     }
 
     handleDeleteClick = (e) => {
@@ -129,33 +135,35 @@ class Education extends Component {
 
     showEduForm = (eduInfo) => {
         return (
-            <form key={ eduInfo.id }>
-                <label htmlFor="schoolInput">Enter School:</label>
-                <input
-                    onChange={this.handleChangeSchool}
-                    value={this.state.school}
-                    type="text"
-                    className="schoolInput"
-                    required
-                />
-                <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
-                <input
-                    onChange={this.handleChangeTitleOfStudy}
-                    value={this.state.titleOfStudy}
-                    type="text"
-                    className="titleOfStudyInput"
-                    required
-                />
-                <label htmlFor="dateInput">Enter date of completion:</label>
-                <input
-                    onChange={this.handleChangeDate}
-                    value={this.state.date}
-                    type="date"
-                    className="dateInput"
-                    required
-                />
+            <form className='eduForm' key={ eduInfo.id }>
+                <div className='inputCont'>
+                    <label htmlFor="schoolInput">Enter School:</label>
+                    <input
+                        onChange={this.handleChangeSchool}
+                        value={this.state.school}
+                        type="text"
+                        className="schoolInput"
+                        required
+                    />
+                    <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
+                    <input
+                        onChange={this.handleChangeTitleOfStudy}
+                        value={this.state.titleOfStudy}
+                        type="text"
+                        className="titleOfStudyInput"
+                        required
+                    />
+                    <label htmlFor="dateInput">Enter date of completion:</label>
+                    <input
+                        onChange={this.handleChangeDate}
+                        value={this.state.date}
+                        type="date"
+                        className="dateInput"
+                        required
+                    />
+                </div>
                 <div className='btnCont'>
-                    <button onClick={this.handleSubmitClick} className={eduInfo.id} >Submit</button>
+                    <button onClick={this.handleSubmitClick} className={eduInfo.id}>Submit</button>
                 </div>
             </form>
         )
@@ -163,10 +171,12 @@ class Education extends Component {
 
     showEduInfo = (eduInfo) => {
         return (
-            <div key={eduInfo.id}>
-                <p>School:  {eduInfo.school}</p>
-                <p>Title of Study:  {eduInfo.titleOfStudy}</p>
-                <p>Completion Date:  {eduInfo.date}</p>
+            <div className='eduInfo' key={eduInfo.id}>
+                <div className='textCont'>
+                    <p>School:  {eduInfo.school}</p>
+                    <p>Title of Study:  {eduInfo.titleOfStudy}</p>
+                    <p>Completion Date:  {eduInfo.date}</p>
+                </div>
                 <div className='btnCont'>
                     <button onClick={this.handleEditClick} className={eduInfo.id}>Edit</button>
                     <button onClick={this.handleDeleteClick} className={eduInfo.id} >Delete</button>
@@ -177,7 +187,7 @@ class Education extends Component {
 
     renderEduArr = () => {
         return (
-            <div>
+            <div className='eduInfoCont'>
                 {this.state.eduArr.map(eduInfo => {
                     if (eduInfo.formView === true) {
                         return (
@@ -196,12 +206,14 @@ class Education extends Component {
 
   render() {
     return (
-        <div>
+        <div className='education'>
             <h3>Education</h3>
             {
                 this.renderEduArr()
             }
-            <button onClick={this.handleAddClick}>Add</button>
+            <div className='addBtnCont'>
+                <button onClick={this.handleAddClick}>Add</button>
+            </div>
         </div>
     )
   }

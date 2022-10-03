@@ -6,7 +6,6 @@ class General extends Component {
         super();
 
         this.state = {
-            generalArr: [],
             name: '',
             email: '',
             phone: '',
@@ -42,50 +41,54 @@ class General extends Component {
   render() {
 
     return (
-        <div>
+        <div className='general'>
             <h3>General Info</h3>
-            {
-            this.state.formView ? (
-            <form>
-                <label htmlFor="nameInput">Enter name:</label>
-                <input
-                    onChange={this.handleChangeName}
-                    value={this.state.name}
-                    type="text"
-                    id="nameInput"
-                    required
-                />
-                <label htmlFor="emailInput">Enter email:</label>
-                <input
-                    onChange={this.handleChangeEmail}
-                    value={this.state.email}
-                    type="text"
-                    id="emailInput"
-                    required
-                />
-                <label htmlFor="phoneInput">Enter phone number:</label>
-                <input
-                    onChange={this.handleChangePhone}
-                    value={this.state.phone}
-                    type="text"
-                    id="nameInput"
-                    required
-                />
-                <div className='btnCont'>
-                    <button onClick={this.handleSumbitEditClick}>Submit</button>
+            <div className='genInfoCont'>
+                {
+                this.state.formView ? (
+                <form>
+                    <label htmlFor="nameInput">Enter name:</label>
+                    <input
+                        onChange={this.handleChangeName}
+                        value={this.state.name}
+                        type="text"
+                        id="nameInput"
+                        required
+                    />
+                    <label htmlFor="emailInput">Enter email:</label>
+                    <input
+                        onChange={this.handleChangeEmail}
+                        value={this.state.email}
+                        type="text"
+                        id="emailInput"
+                        required
+                    />
+                    <label htmlFor="phoneInput">Enter phone number:</label>
+                    <input
+                        onChange={this.handleChangePhone}
+                        value={this.state.phone}
+                        type="text"
+                        id="nameInput"
+                        required
+                    />
+                    <div className='btnCont'>
+                        <button onClick={this.handleSumbitEditClick}>Submit</button>
+                    </div>
+                </form>
+                ) : (
+                <div className='genInfo'>
+                    <div className='textCont'>
+                        <p>Name:  {this.state.name}</p>
+                        <p>Email:  {this.state.email}</p>
+                        <p>Phone:  {this.state.phone}</p>
+                    </div>
+                    <div className='btnCont'>
+                        <button onClick={this.handleSumbitEditClick}>Edit</button>
+                    </div>
                 </div>
-            </form>
-            ) : (
-            <div>
-                <p>Name:  {this.state.name}</p>
-                <p>Email:  {this.state.email}</p>
-                <p>Phone:  {this.state.phone}</p>
-                <div className='btnCont'>
-                    <button onClick={this.handleSumbitEditClick}>Edit</button>
-                </div>
+                )
+                }
             </div>
-            )
-            }
         </div>
     )
   }
