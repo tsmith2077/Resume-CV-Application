@@ -2,42 +2,20 @@ import React, { Component } from 'react'
 import '../styles/General.css'
 
 class General extends Component {
-    constructor() {
-        super();
+    state = {
 
-        this.state = {
-            name: '',
-            email: '',
-            phone: '',
-            formView: true,
-        }
     }
-
-    handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
-    
-    handleSubmitEditClick = (event) => {
-        event.preventDefault()
-        this.setState({
-            formView: !this.state.formView,
-        })
-    }
-
   render() {
-
     return (
         <div className='general'>
             <h3>General Info</h3>
             <div className='genInfoCont'>
                 {
-                this.state.formView ? (
+                this.props.general.formView ? (
                 <form>
                     <label htmlFor="nameInput">Enter full name:</label>
                     <input
-                        onChange={this.handleInputChange}
+                        onChange={(event) => this.props.onInputChange(event, 'general', 'name')}
                         value={this.state.name}
                         name="name"
                         type="text"
@@ -46,7 +24,7 @@ class General extends Component {
                     />
                     <label htmlFor="emailInput">Enter email:</label>
                     <input
-                        onChange={this.handleInputChange}
+                        onChange={(event) => this.props.onInputChange(event)}
                         value={this.state.email}
                         name="email"
                         type="text"
@@ -55,7 +33,7 @@ class General extends Component {
                     />
                     <label htmlFor="phoneInput">Enter phone number:</label>
                     <input
-                        onChange={this.handleInputChange}
+                        onChange={(event) => this.props.onInputChange(event)}
                         value={this.state.phone}
                         name="phone"
                         type="text"
@@ -63,24 +41,25 @@ class General extends Component {
                         required
                     />
                     <div className='btnCont'>
-                        <button onClick={this.handleSubmitEditClick}>Submit</button>
+                        <button onClick={(event) => this.props.onSubmitEditClick(event, this.state)}>Submit</button>
                     </div>
                 </form>
                 ) : (
                 <div className='genInfo'>
                     <div className='textCont'>
-                        <p>Name:  {this.state.name}</p>
-                        <p>Email:  {this.state.email}</p>
-                        <p>Phone:  {this.state.phone}</p>
+                        <p>Name:  {this.props.general.name}</p>
+                        <p>Email:  {this.props.general.email}</p>
+                        <p>Phone:  {this.props.general.phone}</p>
                     </div>
                     <div className='btnCont'>
-                        <button onClick={this.handleSubmitEditClick}>Edit</button>
+                        <button onClick={(event) => this.props.onSubmitEditClick(event, this.props.general)}>Edit</button>
                     </div>
                 </div>
                 )
                 }
             </div>
         </div>
+        
     )
   }
 }
