@@ -1,4 +1,5 @@
 import './styles/App.css';
+import { v4 as uuidv4 } from 'uuid';
 import Header from './components/Header';
 import General from './components/General';
 import Education from './components/Education';
@@ -12,8 +13,15 @@ class App extends Component {
       name: '',
       email: '',
       phone: '',
-      formView: true,
-    }
+    },
+    expArr: [{
+      company: '',
+      position: '',
+      tasks: '',
+      startDate: '',
+      endDate: '',
+      id: uuidv4(),
+  }],
   }
 
   // Need to be able to use changedItem to update state
@@ -24,14 +32,43 @@ class App extends Component {
     this.setState({ updatedState });
   }
 
+  handleInputChangeArr = (event, category, subsection, itemId) => {
+    let updatedState = {...this.state};
+    let itemIndex = updatedState[category].findIndex((currentIndex) => {
+      return currentIndex.id === itemId;
+    })
+    updatedState[category][itemIndex][subsection] = event.target.value;
+    console.log(updatedState)
+    this.setState({ updatedState });
+  }
+
+  handleAddClick = (event) => {
+    event.preventDefault()
+    this.setState({
+            expArr: this.state.expArr.concat(
+            {
+                company: "",
+                position: "",
+                tasks: "",
+                startDate: "",
+                endDate: "",
+                id: uuidv4(),
+            }
+        ),
+    })
+  }
+
+  handleDeleteClick = (event, itemId) => {
+    event.preventDefault()
+    this.setState({
+        expArr: this.state.expArr.filter(expItem => {
+            return expItem.id !== event.target.className
+        })
+    }) 
+}
+
   handleSubmitEditClick = (event, newState) => {
     event.preventDefault()
-    let updatedState = newState;
-    return console.log(updatedState);
-    updatedState.formView = !updatedState.formView;
-    this.setState({
-        formView: !this.state.formView,
-    })
   }
 
   render() {
@@ -41,11 +78,20 @@ class App extends Component {
           <Header />
           <General 
             onInputChange={this.handleInputChange} 
-            onSubmitEditClick={this.handleSubmitEditClick} 
             general={this.state.general}
           />
-          <Education />
-          <Experience />
+          <Education 
+            onInputChange={this.handleInputChangeArr} 
+            onAddClick={this.handleAddClick}
+            onDeleteClick={this.handleDeleteClick}
+            expArr={this.state.eduArr}
+          />
+          <Experience 
+            onInputChange={this.handleInputChangeArr} 
+            onAddClick={this.handleAddClick}
+            onDeleteClick={this.handleDeleteClick}
+            expArr={this.state.expArr}
+          />
         </div>
       </>
     );
