@@ -1,7 +1,6 @@
 CV Application
 
 Todo
--Get Education sharing data with App.js.
 -Get Data sent to CvForm.js
 -Style CvForm.js
 
@@ -9,7 +8,7 @@ Errors
 -
 
 Last worked on
-
+-
 
 Done
 -Get Delete button working. 
@@ -17,3 +16,4 @@ Done
 -Get Experience sharing data with App.js.
     -Need fix for updating state with multiple experience objects.
 -Get handleInputChangeArr working. 
+-Get Education sharing data with App.js.

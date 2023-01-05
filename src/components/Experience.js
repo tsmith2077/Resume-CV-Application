@@ -4,33 +4,6 @@ import '../styles/General.css'
 
 // FOOBAR can't edit tasks but it shows the same as position on input
 class Experience extends Component {
-    // handleSubmitClick = (e) => {
-    //     e.preventDefault()
-    //     const index = this.state.expArr.findIndex(object => {
-    //         return object.id === e.target.className
-    //     })
-    //     let updatedExpArr = [...this.state.expArr];
-    //     let item = {...updatedExpArr[index]};
-    //     item = {
-    //         company: this.state.company,
-    //         position: this.state.position,
-    //         tasks: this.state.tasks,
-    //         startDate: this.formattedDate(this.state.startDate),
-    //         endDate: this.formattedDate(this.state.endDate),
-    //         id: e.target.className,
-    //         formView: false,
-    //     }
-    //     updatedExpArr[index] = item;
-    //     this.setState({
-    //         expArr: updatedExpArr,
-    //         company: '',
-    //         position: '',
-    //         tasks: '',
-    //         startDate: '',
-    //         endDate: '',
-    //     });
-    // }
-
     formattedDate = (date) => {
         if (date === '') {
             return ''
@@ -47,6 +20,7 @@ class Experience extends Component {
         }
     };
 
+    // Foobar may not need this now.
     formatDateForEdit = (date) => {
         if (date === '') {
             return ''
@@ -114,7 +88,7 @@ class Experience extends Component {
                         <div className='btnCont'>
                             <button 
                                 className={expInfo.id}
-                                onClick={(event) => this.props.onDeleteClick(event, expInfo.id)}>Delete
+                                onClick={(event) => this.props.onDeleteClick(event, 'experience')}>Delete
                             </button>
                         </div>
                     </form>
@@ -133,7 +107,7 @@ class Experience extends Component {
                 this.renderExpArr()
             }
             <div className='addBtnCont'>
-                <button onClick={(event) => this.props.onAddClick(event)}>Add</button>
+                <button onClick={(event) => this.props.onAddClick(event, 'experience')}>Add</button>
             </div>
         </div>
     )

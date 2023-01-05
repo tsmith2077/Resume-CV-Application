@@ -14,6 +14,12 @@ class App extends Component {
       email: '',
       phone: '',
     },
+    eduArr: [{
+      school: '',
+      titleOfStudy: '',
+      date: '',
+      id: uuidv4(),
+    }],
     expArr: [{
       company: '',
       position: '',
@@ -21,7 +27,7 @@ class App extends Component {
       startDate: '',
       endDate: '',
       id: uuidv4(),
-  }],
+    }],
   }
 
   // Need to be able to use changedItem to update state
@@ -42,34 +48,53 @@ class App extends Component {
     this.setState({ updatedState });
   }
 
-  handleAddClick = (event) => {
+  handleAddClick = (event, section) => {
     event.preventDefault()
-    this.setState({
-            expArr: this.state.expArr.concat(
-            {
-                company: "",
-                position: "",
-                tasks: "",
-                startDate: "",
-                endDate: "",
-                id: uuidv4(),
-            }
-        ),
-    })
+    if (section === 'experience') {
+      this.setState({
+        expArr: this.state.expArr.concat(
+        {
+            company: "",
+            position: "",
+            tasks: "",
+            startDate: "",
+            endDate: "",
+            id: uuidv4(),
+        }
+        )
+      }) 
+    } else {
+      this.setState({
+        eduArr: this.state.eduArr.concat(
+        {
+            school: this.state.school,
+            titleOfStudy: this.state.titleOfStudy,
+            date: this.state.date,
+            id: uuidv4(),
+        }
+    )
+      })
+    }
   }
 
-  handleDeleteClick = (event, itemId) => {
+  // Foobar need to fix so it works with Education.js
+  handleDeleteClick = (event, section) => {
     event.preventDefault()
-    this.setState({
+    if (section === 'experience') {
+      this.setState({
         expArr: this.state.expArr.filter(expItem => {
             return expItem.id !== event.target.className
         })
+      }) 
+    } else {
+      this.setState({
+        eduArr: this.state.eduArr.filter(eduItem => {
+            return eduItem.id !== event.target.className
+        })
     }) 
-}
+    }
 
-  handleSubmitEditClick = (event, newState) => {
-    event.preventDefault()
-  }
+}
 
   render() {
     return (
@@ -84,7 +109,7 @@ class App extends Component {
             onInputChange={this.handleInputChangeArr} 
             onAddClick={this.handleAddClick}
             onDeleteClick={this.handleDeleteClick}
-            expArr={this.state.eduArr}
+            eduArr={this.state.eduArr}
           />
           <Experience 
             onInputChange={this.handleInputChangeArr} 

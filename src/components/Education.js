@@ -1,97 +1,7 @@
 import React, { Component } from 'react'
-import { v4 as uuidv4 } from 'uuid';
 import '../styles/General.css'
 
 class Education extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            eduArr: [{
-                school: '',
-                titleOfStudy: '',
-                date: '',
-                formView: true,
-                id: uuidv4(),
-            }],
-            school: '',
-            titleOfStudy: '',
-            date: '',
-            formView: true,
-            id: '',
-        }
-    }
-
-    handleInputChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value,
-        })
-    }
-    
-    handleAddClick = (e) => {
-        e.preventDefault()
-        this.setState({
-                eduArr: this.state.eduArr.concat(
-                {
-                    school: this.state.school,
-                    titleOfStudy: this.state.titleOfStudy,
-                    date: this.state.date,
-                    id: uuidv4(),
-                    formView: true,
-                }
-            ),
-        })
-    }
-
-    handleDeleteClick = (e) => {
-        e.preventDefault()
-        this.setState({
-            eduArr: this.state.eduArr.filter(eduInfo => {
-                return eduInfo.id !== e.target.className
-            })
-        }) 
-    }
-
-    handleEditClick = (e) => {
-        e.preventDefault()
-        const index = this.state.eduArr.findIndex(object => {
-            return object.id === e.target.className
-        })
-        let updatedEduArr = [...this.state.eduArr];
-        let item = {...updatedEduArr[index]};
-        item.formView = true
-        updatedEduArr[index] = item;
-        this.setState({
-            eduArr: updatedEduArr,
-            school: item.school,
-            titleOfStudy: item.titleOfStudy,
-            date: this.formatDateForEdit(item.date),
-        });
-    }
-
-    handleSubmitClick = (e) => {
-        e.preventDefault()
-        const index = this.state.eduArr.findIndex(object => {
-            return object.id === e.target.className
-        })
-        let updatedEduArr = [...this.state.eduArr];
-        let item = {...updatedEduArr[index]};
-        item = {
-            school: this.state.school,
-            titleOfStudy: this.state.titleOfStudy,
-            date: this.formattedDate(this.state.date),
-            id: e.target.className,
-            formView: false,
-        }
-        updatedEduArr[index] = item;
-        this.setState({
-            eduArr: updatedEduArr,
-            school: '',
-            titleOfStudy: '',
-            date: '',
-        });
-    }
-
     formattedDate = (date) => {
         if (date === '') {
             return ''
@@ -108,6 +18,7 @@ class Education extends Component {
         }
     };
 
+    // Foobar may not need this now.
     formatDateForEdit = (date) => {
         if (date === '') {
             return ''
@@ -121,89 +32,55 @@ class Education extends Component {
         }
     }
 
-    showEduForm = (eduInfo) => {
-        return (
-            <form className='eduForm' key={ eduInfo.id }>
-                <div className='inputCont'>
-                    <label htmlFor="schoolInput">Enter School:</label>
-                    <input
-                        onChange={this.handleInputChange}
-                        name="school"
-                        value={this.state.school}
-                        type="text"
-                        className="schoolInput"
-                        required
-                    />
-                    <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
-                    <input
-                        onChange={this.handleInputChange}
-                        value={this.state.titleOfStudy}
-                        name="titleOfStudy"
-                        type="text"
-                        className="titleOfStudyInput"
-                        required
-                    />
-                    <label htmlFor="dateInput">Enter date of completion:</label>
-                    <input
-                        onChange={this.handleInputChange}
-                        value={this.state.date}
-                        name= "date"
-                        type="date"
-                        className="dateInput"
-                        required
-                    />
-                </div>
-                <div className='btnCont'>
-                    <button onClick={this.handleSubmitClick} className={eduInfo.id}>Submit</button>
-                </div>
-            </form>
-        )
-    }
-
-    showEduInfo = (eduInfo) => {
-        return (
-            <div className='eduInfo' key={eduInfo.id}>
-                <div className='textCont'>
-                    <p>School:  {eduInfo.school}</p>
-                    <p>Title of Study:  {eduInfo.titleOfStudy}</p>
-                    <p>Completion Date:  {eduInfo.date}</p>
-                </div>
-                <div className='btnCont'>
-                    <button onClick={this.handleEditClick} className={eduInfo.id}>Edit</button>
-                    <button onClick={this.handleDeleteClick} className={eduInfo.id} >Delete</button>
-                </div>
-            </div>
-        )
-    }
-
-    renderEduArr = () => {
-        return (
-            <div className='eduInfoCont'>
-                {this.state.eduArr.map(eduInfo => {
-                    if (eduInfo.formView === true) {
-                        return (
-                            this.showEduForm(eduInfo)
-                        )
-                    } else {
-                        return (
-                           this.showEduInfo(eduInfo)
-                        )
-                    }
-                })
-                }
-            </div>
-        ) 
-    }
-
   render() {
     return (
         <div className='education'>
             <h3>Education</h3>
-            {
-                this.renderEduArr()
-            }
+            <div className='eduInfoCont'>
+                {this.props.eduArr.map(eduInfo => {
+                          return (
+                            <form className='eduForm' key={ eduInfo.id }>
+                                <div className='inputCont'>
+                                    <label htmlFor="schoolInput">Enter School:</label>
+                                    <input
+                                        onChange={(event) => this.props.onInputChange(event, 'eduArr', 'school', eduInfo.id)}
+                                        name="school"
+                                        value={this.props.school}
+                                        type="text"
+                                        className="schoolInput"
+                                        required
+                                    />
+                                    <label htmlFor="titleOfStudyInput">Enter Title of Study:</label>
+                                    <input
+                                        onChange={(event) => this.props.onInputChange(event, 'eduArr', 'titleOfStudy', eduInfo.id)}
+                                        value={this.props.titleOfStudy}
+                                        name="titleOfStudy"
+                                        type="text"
+                                        className="titleOfStudyInput"
+                                        required
+                                    />
+                                    <label htmlFor="dateInput">Enter date of completion:</label>
+                                    <input
+                                        onChange={(event) => this.props.onInputChange(event, 'eduArr', 'date', eduInfo.id)}
+                                        value={this.props.date}
+                                        name= "date"
+                                        type="date"
+                                        className="dateInput"
+                                        required
+                                    />
+                            <div className='btnCont'>
+                                <button 
+                                    className={eduInfo.id}
+                                    onClick={(event) => this.props.onDeleteClick(event, 'education')}>Delete
+                                </button>
+                            </div>
+                                </div>
+                            </form>
+                        )
+                })}
+            </div>
             <div className='addBtnCont'>
-                <button onClick={this.handleAddClick}>Add</button>
+                <button onClick={(event) => this.props.onAddClick(event, 'education')}>Add</button>
             </div>
         </div>
     )
