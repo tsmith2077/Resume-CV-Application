@@ -31,6 +31,7 @@ button {
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
+  margin-bottom: 1rem;
 }
 
 button:hover {

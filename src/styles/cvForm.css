@@ -1,0 +1,51 @@
+.genCont,
+.expCont,
+.eduCont {
+    width: 60vw;
+}
+
+.genCont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5rem;
+}
+
+.name {
+    font-size: 2rem;
+}
+
+.contactDataCont {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: auto;
+}
+
+.eduHeader,
+.expHeader {
+    width: 30%;
+}
+
+.eduCont,
+.expCont {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    margin-right: auto;
+    margin-left: 10vw;
+    border-bottom: solid;
+    border-color: rgba(0, 0, 0, .5);
+    margin-bottom: 2rem 2rem;
+}
+
+.eduCont {
+    margin-bottom: 6rem;
+}
+
+/* .eduDataCont,
+.expDataCont {
+    margin-left: auto;
+} */

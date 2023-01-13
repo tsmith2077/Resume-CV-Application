@@ -2,23 +2,8 @@ import React, { Component } from 'react'
 import '../styles/General.css'
 
 class Education extends Component {
-    formattedDate = (date) => {
-        if (date === '') {
-            return ''
-        } else if (date.includes('/')) {
-            return date
-        } else {
-            console.log(date)
-            let dateInput = date.split('-')
-            const day = dateInput[2]
-            const month = dateInput[1];
-            const year = dateInput[0];
-            let fullDate = month + "/" + day + "/" + year;
-            return fullDate;
-        }
-    };
 
-    // Foobar may not need this now.
+
     formatDateForEdit = (date) => {
         if (date === '') {
             return ''
@@ -61,7 +46,7 @@ class Education extends Component {
                                     />
                                     <label htmlFor="dateInput">Enter date of completion:</label>
                                     <input
-                                        onChange={(event) => this.props.onInputChange(event, 'eduArr', 'date', eduInfo.id)}
+                                        onChange={(event) => this.props.onInputChange(event, 'eduArr', 'dateCompleted', eduInfo.id)}
                                         value={this.props.date}
                                         name= "date"
                                         type="date"
